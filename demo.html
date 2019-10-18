@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        background-color: #333;
+    }
+    #SVG{
+        margin: 0 auto;
+        /* width: 500px; */
+        /* height: 300px; */
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+</style>
+<body>
+
+    <div id="chart">
+       
+    </div>
+    <button class = "zoomOutX">x轴放大</button>
+    <button class = "zoomInX" >x轴缩小</button>
+    <button class = "zoomOutY">y轴缩小</button>
+    <button class = "zoomInY" >y轴放大</button>
+
+    <script src='./libs/jquery.min.js'></script>
+    <script src="./libs/jquery.extendObject.js"></script>
+    <script src="./libs/snap.svg-min.js"></script>
+    <script src="./libs/jquery.xoperate.js"></script>
+    <script src="./libs/jquery.xoperate.gdrag.js"></script>
+    <script src="./_chart.js"></script>
+    <script type="module">
+        const data1  =[
+                    {
+                        data: [
+                            {x: 100, y: 100}, 
+                            {x: 400, y: 200},
+                            {x: 700, y: 300}, 
+                            {x: 900, y: 600},
+                            {x: 1000, y: 900},
+                            {x: 1200, y: 1200}
+                        ]
+                    },
+                    {
+                        data: [
+                            {x: 1700, y: 1900}, 
+                            {x: 1900, y: 200},
+                            {x: 2200, y: 800}, 
+                            {x: 2400, y: 400},
+                            {x: 2600, y: 300},
+                            {x: 3000, y: 1500}
+                        ]
+                    }
+                ]
+        const data2 = [
+                    {
+                        data: [
+                            {x: 10, y: 10}, 
+                            {x: 40, y: 20},
+                            {x: 70, y: 30}, 
+                            {x: 90, y: 60},
+                            {x: 100, y: 90},
+                            {x: 120, y: 120}
+                        ]
+                    },
+                    {
+                        data: [
+                            {x: 170, y: 100}, 
+                            {x: 190, y: 20},
+                            {x: 220, y: 80}, 
+                            {x: 240, y: 40},
+                            {x: 260, y: 30},
+                            {x: 300, y: 100}
+                        ]
+                    }
+                ]
+        const data3  =[
+            {
+                data: [
+                    {x: 340, y: 0.3}, 
+                    {x: 400, y: 0.70},
+                    {x: 500, y: 0.30}, 
+                    {x: 600, y: 0.80},
+                    {x: 700, y: 0.90},
+                    {x: 800, y: 0.80}
+                ]
+            },
+            {
+                data: [
+                    {x: 700, y: 0.5}, 
+                    {x: 800, y: 0.57},
+                    {x: 900, y: 0.3}, 
+                    {x: 1000, y: 0.80},
+                    {x: 1200, y: 0.90},
+                    {x: 1400, y: 0.20}
+                ]
+            }
+        ]
+        const opts = {
+            height: 300,
+            el: '#chart',
+            lineStroke: 'white',
+            lineActiveStroke: '#82EF51',
+            circleFill: 'white',
+            circleActiveFill: '#82EF51',
+            xTouchSide: false,
+            data: data3,
+            navLabelX: {
+                show: true,
+                text: 'CT',
+                color: 'white',
+                size: 12,
+                type: 'int'
+            },
+            navLabelY: {
+                show: true,
+                text: 'Alpha',
+                color: 'white',
+                size: 12,
+                type: 'float-2'
+            },
+            styles: {
+				margin: { //图表距离 wrapper 的边距
+					top: 10,
+					left: 80,
+					right: 20,
+					bottom: 30,
+                },
+                backgroundColor: '#333'
+            },
+            xAxis: {//x轴
+				min: 0, //横向轴起始值
+				max: 1500, //横向轴结束值
+				grid: 13, //横向平分多少格
+                zoom: true, //缩放操作，true 可以，false 不可以
+                scale: 10,
+                outsideMin: 0,
+                outsideMax: 0,
+				drag: true, //轴拖拽（在轴上水平拖拽，改变 xAxis.min，xAxis.max，同时触发 onAxisChange 回调）
+			},
+			yAxis: {//y轴
+				min: 0,
+				max: 1,
+				grid: 4,
+				zoom: true,
+                drag:true,
+                scale: 0.1,
+                outsideMin: 0,
+                outsideMax: 1,
+            },
+            handleBarSize: 10,
+            handleBarX: $('#chart').width() - 60,
+            handleBarY: $('#chart').height() + 20,
+            onAxisChange: function(data){
+                // console.log(data)
+            }
+        }
+        
+        const Chart = new ProtocolEditorChart(opts)
+        let max_x = 1500, max_y = 100
+        // $('.zoomOutX').on('click', ()=>{
+        //     max_x += 50
+        //     Chart.setOptions({xAxis:{max: max_x}})
+        // })
+        // $('.zoomInX').on('click', ()=>{
+        //     max_x-=50
+        //     Chart.setOptions({xAxis:{max: max_x}})
+        // })
+        // $('.zoomOutY').on('click', ()=>{
+        //     max_y-=10
+        //     Chart.setOptions({yAxis:{max: max_y}})
+        // })
+        // $('.zoomInY').on('click', ()=>{
+        //     max_y+=10
+        //     Chart.setOptions({yAxis:{max: max_y}})
+        // })
+        
+
+
+    </script>
+</body>
+</html>
